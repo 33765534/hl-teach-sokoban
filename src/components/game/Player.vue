@@ -8,8 +8,10 @@
 import { ref, computed, onMounted, onUnmounted } from "vue";
 import keeper from "../../assets/keeper.png";
 import { usePlayerStore } from "../../store/player";
+import { usePosition } from "../../composables/usePosition.ts";
 
-const { position } = usePosition();
+const { player } = usePlayerStore();
+const { position } = usePosition(player);
 
 function handleKeyup(e) {
   const {
@@ -39,17 +41,6 @@ onMounted(() => {
 onUnmounted(() => {
   window.removeEventListener("keyup", handleKeyup);
 });
-function usePosition() {
-  const { player } = usePlayerStore();
-  const STEP = 32;
-  const position = computed(() => {
-    return {
-      left: player.x * STEP + "px",
-      top: player.y * STEP + "px",
-    };
-  });
-  return { position };
-}
 </script>
 
 <style scoped lang="scss"></style>
