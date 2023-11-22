@@ -1,6 +1,7 @@
 import { defineStore } from "pinia";
 import { reactive } from "vue";
 import { useMapStore, MapTile } from "./map";
+import { useCargoStore } from "./cargo";
 
 export const usePlayerStore = defineStore("player", () => {
     const { isWall } = useMapStore();
@@ -9,23 +10,30 @@ export const usePlayerStore = defineStore("player", () => {
         y: 1,
     });
 
+    function _move(dx: number, dy: number) {
+        if (isWall({ x: player.x + dx, y: player.y + dy })) return;
 
+        const { findCargo, moveCargo } = useCargoStore();
+        const cargo = findCargo({ x: player.x + dx, y: player.y + dy })
+        if (cargo) {
+            const isMoveCargo = moveCargo(cargo, dx, dy);
+            if (!isMoveCargo) return;
+        }
+        player.x += dx;
+        player.y += dy;
+    }
 
     function movePlayerToLeft() {
-        if (isWall({ x: player.x - 1, y: player.y })) return;
-        player.x -= 1;
+        _move(-1, 0);
     }
     function movePlayerToRight() {
-        if (isWall({ x: player.x + 1, y: player.y })) return;
-        player.x += 1;
+        _move(1, 0);
     }
     function movePlayerToDown() {
-        if (isWall({ x: player.x, y: player.y + 1 })) return;
-        player.y += 1;
+        _move(0, 1);
     }
     function movePlayerToUp() {
-        if (isWall({ x: player.x, y: player.y - 1 })) return;
-        player.y -= 1;
+        _move(0, -1);
     }
     return { player, movePlayerToLeft, movePlayerToRight, movePlayerToDown, movePlayerToUp }
 })
