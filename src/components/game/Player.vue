@@ -9,9 +9,11 @@ import { ref, computed, onMounted, onUnmounted } from "vue";
 import keeper from "../../assets/keeper.png";
 import { usePlayerStore } from "../../store/player";
 import { usePosition } from "../../composables/usePosition.ts";
+import { useGameStore } from "../../store/game";
 
 const { player } = usePlayerStore();
 const { position } = usePosition(player);
+const { detectionGameCompleted } = useGameStore();
 
 function handleKeyup(e) {
   const {
@@ -34,6 +36,8 @@ function handleKeyup(e) {
       movePlayerToDown();
       break;
   }
+
+  detectionGameCompleted();
 }
 onMounted(() => {
   window.addEventListener("keyup", handleKeyup);
