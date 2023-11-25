@@ -20,15 +20,15 @@ import Target from "./Target.vue";
 import { useCargoStore } from "../../store/cargo.ts";
 import { useTargetStore } from "../../store/target.ts";
 import { useGameStore } from "../../store/game.ts";
+import { levelGameData } from "../../game/gameData";
 
-const { cargos, addCargo, createCargo } = useCargoStore();
-addCargo(createCargo({ x: 2, y: 2 }));
-
-const { targets,addTarget,createTarget } = useTargetStore();
+const { setupGame } = useGameStore();
+const { cargos } = useCargoStore();
+const { targets } = useTargetStore();
 const { game } = useGameStore();
 
-// 创建放置点
-addTarget(createTarget({ x: 4, y: 3 }))
+
+setupGame(levelGameData);
 </script>
 
 <style scoped lang="scss"></style>
