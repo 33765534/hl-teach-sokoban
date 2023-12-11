@@ -1,10 +1,15 @@
 <template>
-  <div class="border border-white" @click="handleClick">
+  <div
+    class="border border-white"
+    @click="handleClick"
+    @mousedown="handleMouseDown"
+    @mousemove="handleMouseMove"
+  >
     <template v-if="map[props.y][props.x] === MapTile.WALL">
-      <img :src="wallImg" />
+      <img :src="wallImg" draggable="false" />
     </template>
     <template v-if="map[props.y][props.x] === MapTile.FLOOR">
-      <img :src="floorImg" />
+      <img :src="floorImg" draggable="false" />
     </template>
   </div>
 </template>
@@ -15,6 +20,9 @@ import floorImg from "@/assets/floor.png";
 import { MapTile } from "@/store/map";
 import { useMapEditStore } from "@/store/edit/mapEdit.ts";
 import { useEditElementStore } from "../../store/edit/editElement";
+import { useDrag } from "../../composables/useDrag";
+
+const { startDrag, stopDrag, isDragging } = useDrag();
 
 interface Props {
   x: number;
@@ -27,6 +35,24 @@ const { map } = useMapEditStore();
 const { getCurrentSelectedEditElement } = useEditElementStore();
 function handleClick() {
   getCurrentSelectedEditElement().execute(props);
+}
+
+//鼠标抬起
+function handleMouseUp() {
+  stopDrag();
+  window.removeEventListener("mouseup", handleMouseUp);
+}
+// 鼠标按下
+function handleMouseDown() {
+  startDrag();
+  window.addEventListener("mouseup", handleMouseUp);
+}
+
+// 鼠标移动
+function handleMouseMove() {
+  if (isDragging()) {
+    getCurrentSelectedEditElement()?.execute(props);
+  }
 }
 </script>
 

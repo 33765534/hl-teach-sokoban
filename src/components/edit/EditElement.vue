@@ -14,6 +14,7 @@ interface Props {
 const props = defineProps<Props>();
 const { setCurrentSelectedEditElement } = useEditElementStore();
 function handleClick() {
+  document.body.style.cursor = `url(${props.editElement?.img}),auto`;
   setCurrentSelectedEditElement(props.editElement);
 }
 </script>

@@ -6,7 +6,9 @@ import { MapTile } from "../../map";
 
 describe("editElement", () => {
     beforeEach(() => {
-        setActivePinia(createPinia())
+        setActivePinia(createPinia());
+        const { initMap } = useMapEditStore();
+        initMap()
     })
     it("should change to wall when current selected element is wall", () => {
         const { map } = useMapEditStore();
