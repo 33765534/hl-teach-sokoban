@@ -19,8 +19,8 @@ import wallImg from "@/assets/wall.png";
 import floorImg from "@/assets/floor.png";
 import { MapTile } from "@/store/map";
 import { useMapEditStore } from "@/store/edit/mapEdit.ts";
-import { useEditElementStore } from "../../store/edit/editElement";
-import { useDrag } from "../../composables/useDrag";
+import { useEditElementStore } from "@/store/edit/editElement";
+import { useDrag } from "@/composables/useDrag";
 
 const { startDrag, stopDrag, isDragging } = useDrag();
 

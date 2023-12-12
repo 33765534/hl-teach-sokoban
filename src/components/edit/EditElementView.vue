@@ -15,6 +15,12 @@
       <EditElementView :editElement="wallEditElement" />
       <EditElementView :editElement="floorEditElement" />
     </div>
+    <div class="flex space-x-2 m-2">
+      <h4>玩家：</h4>
+      <EditElementView :editElement="playerEditElement" />
+      <EditElementView :editElement="cargoEditElement" />
+    </div>
+    <div>当前选择的：{{ selectedEditElementName }}</div>
   </div>
 </template>
 
@@ -23,10 +29,14 @@ import EditElementView from "./EditElement.vue";
 import {
   floorEditElement,
   wallEditElement,
+  playerEditElement,
+  useEditElementStore,
+  cargoEditElement,
 } from "../../store/edit/editElement";
 import { useMapEditStore } from "../../store/edit/mapEdit";
-import { watchEffect, toRefs } from "vue";
+import { watchEffect, toRefs, computed } from "vue";
 
+const { getCurrentSelectedEditElement } = useEditElementStore();
 const { initMap, updateMapRow, updateMapCol } = useMapEditStore();
 const { row, col } = toRefs(useMapEditStore());
 initMap();
@@ -39,6 +49,14 @@ watchEffect(() => {
 watchEffect(() => {
   if (!col.value) return;
   updateMapCol();
+});
+
+const selectedEditElementName = computed(() => {
+  if (!getCurrentSelectedEditElement()) {
+    return "没有选择";
+  }
+
+  return getCurrentSelectedEditElement()!.name;
 });
 </script>
 

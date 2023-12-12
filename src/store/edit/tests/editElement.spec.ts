@@ -1,8 +1,10 @@
 import { createPinia, setActivePinia } from "pinia";
 import { beforeEach, describe, expect, it } from "vitest";
 import { useMapEditStore } from "../mapEdit";
-import { floorEditElement, useEditElementStore, wallEditElement } from "../editElement";
+import { cargoEditElement, floorEditElement, playerEditElement, useEditElementStore, wallEditElement } from "../editElement";
 import { MapTile } from "../../map";
+import { useEditPlayerStore } from "../editPlayer";
+import { useEditCargoStore } from "../editCargo";
 
 describe("editElement", () => {
     beforeEach(() => {
@@ -16,7 +18,7 @@ describe("editElement", () => {
             setCurrentSelectedEditElement } = useEditElementStore();
         setCurrentSelectedEditElement(wallEditElement);
 
-        getCurrentSelectedEditElement().execute({ x: 1, y: 1 })
+        getCurrentSelectedEditElement()!.execute({ x: 1, y: 1 })
 
         expect(map[1][1]).toBe(MapTile.WALL);
     })
@@ -26,8 +28,40 @@ describe("editElement", () => {
             setCurrentSelectedEditElement } = useEditElementStore();
         setCurrentSelectedEditElement(floorEditElement);
 
-        getCurrentSelectedEditElement().execute({ x: 1, y: 1 })
+        getCurrentSelectedEditElement()!.execute({ x: 1, y: 1 })
 
         expect(map[1][1]).toBe(MapTile.FLOOR);
+    })
+
+    it("should update position of player when current selected element is player", () => {
+        const { player } = useEditPlayerStore();
+        const { getCurrentSelectedEditElement,
+            setCurrentSelectedEditElement } = useEditElementStore();
+        setCurrentSelectedEditElement(playerEditElement);
+
+        const position = {
+            x: 1,
+            y: 1,
+        }
+        getCurrentSelectedEditElement()!.execute(position)
+
+        expect(player.x).toBe(position.x);
+        expect(player.y).toBe(position.y);
+    })
+
+    it("should add a cargo when current selected element is cargo", () => {
+        const { cargos } = useEditCargoStore();
+        const { getCurrentSelectedEditElement,
+            setCurrentSelectedEditElement } = useEditElementStore();
+        setCurrentSelectedEditElement(cargoEditElement);
+
+        const position = {
+            x: 1,
+            y: 1,
+        }
+        getCurrentSelectedEditElement()!.execute(position)
+
+        expect(cargos[0].x).toBe(position.x);
+        expect(cargos[0].y).toBe(position.y);
     })
 })

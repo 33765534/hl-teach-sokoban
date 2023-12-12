@@ -2,16 +2,23 @@ import { defineStore } from "pinia";
 import { Position } from "../../composables/usePosition";
 import { MapTile } from "../map";
 import { useMapEditStore } from "./mapEdit";
+import playerImg from "@/assets/keeper.png";
 import wallImg from "@/assets/wall.png";
 import floorImg from "@/assets/floor.png";
+import cargoImg from "@/assets/cargo.png";
+import { useEditPlayerStore } from "./editPlayer";
+import { ref } from "vue";
+import { useEditCargoStore } from "./editCargo";
 
 export interface EditElement {
+    name: string;
     img: string;
     execute: (position: Position) => void;
 }
 
 export const wallEditElement: EditElement = {
-    img:wallImg,
+    name: '墙',
+    img: wallImg,
     execute(position) {
         const { map } = useMapEditStore();
         map[position.y][position.x] = MapTile.WALL
@@ -19,20 +26,40 @@ export const wallEditElement: EditElement = {
 }
 
 export const floorEditElement: EditElement = {
-    img:floorImg,
+    name: '地板',
+    img: floorImg,
     execute(position) {
         const { map } = useMapEditStore();
         map[position.y][position.x] = MapTile.FLOOR
     }
 }
 
+export const playerEditElement: EditElement = {
+    name: '玩家',
+    img: playerImg,
+    execute(position) {
+        const { player } = useEditPlayerStore();
+        player.x = position.x;
+        player.y = position.y;
+    }
+}
+
+export const cargoEditElement: EditElement = {
+    name: '箱子',
+    img: cargoImg,
+    execute(position) {
+        const { createCargo, addCargo } = useEditCargoStore();
+        addCargo(createCargo({ x: position.x, y: position.y }))
+    }
+}
+
 export const useEditElementStore = defineStore("edit-element", () => {
-    let currentSelectedEditElement: EditElement;
+    let currentSelectedEditElement = ref<EditElement | undefined>();
     function getCurrentSelectedEditElement() {
-        return currentSelectedEditElement;
+        return currentSelectedEditElement.value;
     }
     function setCurrentSelectedEditElement(editElement: EditElement) {
-        currentSelectedEditElement = editElement;
+        currentSelectedEditElement.value = editElement;
     }
 
     return {
