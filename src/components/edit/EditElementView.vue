@@ -19,6 +19,7 @@
       <h4>玩家：</h4>
       <EditElementView :editElement="playerEditElement" />
       <EditElementView :editElement="cargoEditElement" />
+      <EditElementView :editElement="targetEditElement" />
     </div>
     <div>当前选择的：{{ selectedEditElementName }}</div>
   </div>
@@ -32,6 +33,7 @@ import {
   playerEditElement,
   useEditElementStore,
   cargoEditElement,
+  targetEditElement,
 } from "../../store/edit/editElement";
 import { useMapEditStore } from "../../store/edit/mapEdit";
 import { watchEffect, toRefs, computed } from "vue";

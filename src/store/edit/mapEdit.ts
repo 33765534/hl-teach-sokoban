@@ -2,7 +2,7 @@ import { ref, reactive } from "vue";
 import { defineStore } from "pinia";
 import { MapTile } from "../map";
 
-type MapEdit = MapTile[][];
+export type MapEdit = MapTile[][];
 
 export const useMapEditStore = defineStore("map-edit", () => {
     const map = reactive<MapEdit>([])
