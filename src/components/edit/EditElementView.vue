@@ -22,6 +22,7 @@
       <EditElementView :editElement="targetEditElement" />
     </div>
     <div>当前选择的：{{ selectedEditElementName }}</div>
+    
   </div>
 </template>
 
@@ -42,6 +43,7 @@ const { getCurrentSelectedEditElement } = useEditElementStore();
 const { initMap, updateMapRow, updateMapCol } = useMapEditStore();
 const { row, col } = toRefs(useMapEditStore());
 initMap();
+
 
 watchEffect(() => {
   if (!row.value) return;

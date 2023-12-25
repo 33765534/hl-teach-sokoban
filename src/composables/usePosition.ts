@@ -7,6 +7,7 @@ export interface Position {
 
 export const STEP_GAME = 32;
 export const STEP_EDIT = 33.5;
+export const STEP_EDIT2 = 34;
 export function usePosition(pos: Position, setp: number = STEP_GAME) {
     const position = computed(() => {
         return {

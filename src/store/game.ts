@@ -1,7 +1,7 @@
 import { defineStore } from "pinia";
 import { useCargoStore } from "./cargo";
 import { reactive } from "vue";
-import { useMapStore, type Map } from "./map"
+import { useMapStore } from "./map"
 import { useTargetStore } from "./target";
 import { usePlayerStore } from "./player";
 import { LevelGameData } from "../game/gameData";

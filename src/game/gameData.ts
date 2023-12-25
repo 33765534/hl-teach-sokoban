@@ -1,3 +1,4 @@
+import { ref } from "vue";
 import { type GameData } from "../store/game";
 import { type Map } from "../store/map";
 
@@ -46,7 +47,117 @@ export const levelGameData = {
     ],
 };
 
-export const gameData: GameData = [
+export const gameData: any = ref<GameData>([
+    
+    {
+        "map": [
+          [
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1
+          ],
+          [
+            1,
+            2,
+            2,
+            2,
+            2,
+            2,
+            2,
+            1
+          ],
+          [
+            1,
+            2,
+            2,
+            2,
+            2,
+            2,
+            2,
+            1
+          ],
+          [
+            1,
+            2,
+            2,
+            2,
+            2,
+            2,
+            2,
+            1
+          ],
+          [
+            1,
+            2,
+            2,
+            2,
+            2,
+            2,
+            2,
+            1
+          ],
+          [
+            1,
+            2,
+            2,
+            2,
+            2,
+            2,
+            2,
+            1
+          ],
+          [
+            1,
+            1,
+            1,
+            2,
+            2,
+            2,
+            2,
+            1
+          ],
+          [
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1
+          ]
+        ],
+        "player": {
+          "x": 2,
+          "y": 3
+        },
+        "cargos": [
+          {
+            "x": 4,
+            "y": 3
+          },
+          {
+            "x": 3,
+            "y": 4
+          }
+        ],
+        "targets": [
+          {
+            "x": 5,
+            "y": 3
+          },
+          {
+            "x": 4,
+            "y": 5
+          }
+        ]
+      }
+        ,      
     {
         "map": [
             [
@@ -180,4 +291,4 @@ export const gameData: GameData = [
                 y: 3,
             },
         ],
-    }]
+    }])

@@ -7,8 +7,8 @@ interface EditPlayer {
 }
 export const useEditPlayerStore = defineStore("edit-player", () => {
     const player = reactive<EditPlayer>({
-        x: 0,
-        y: 0,
+        x: -1,
+        y: -1,
     })
 
     return { player }

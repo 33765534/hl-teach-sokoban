@@ -34,7 +34,6 @@ import { useEditTargetStore } from "@/store/edit/editTarget.ts";
 
 const { cargos } = useEditCargoStore();
 const { targets } = useEditTargetStore();
-debugger
 </script>
 
 <style scoped lang="scss"></style>
